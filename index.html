@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>任正非讲话分析</title>
+</head>
+<body id="Jbody">
+  <select name="name" id="Jselect">
+    <option :value="item" v-for="(item,index) of menuArr">{{item}}</option>
+  </select>
+  <div id="canvas-container">
+    <canvas id="canvas" width="750" height="500"></canvas>
+  </div>
+  <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.min.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.min.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/wordcloud2.js/1.1.1/wordcloud2.js"></script>
+  <script>
+    let options = ({
+        "list": [],
+        "gridSize": 12, // size of the grid in pixels
+        "weightFactor": 2, // number to multiply for size of each word in the list
+        "fontWeight": 'normal', // 'normal', 'bold' or a callback
+        "fontFamily": 'Times, serif', // font to use
+        "color": 'random-light', // 'random-dark' or 'random-light'
+        "backgroundColor": '#555', // the color of canvas
+        "rotateRatio": 0, // probability for the word to rotate. 1 means always rotate
+    });
+
+
+    let vm = new Vue({
+      el: '#Jselect',
+      data: {
+        menuArr:[1,2,3],
+      },
+      created: function () {
+        // WordCloud(canvas, options)
+        this.getMenu()
+      },
+      methods: {
+        getMenu(){
+          axios({
+            method:'get',
+            url:'./json/menu.json',
+          }).then((data)=>{
+            this.menuArr = eval(data.data)
+          }).catch((err)=>{
+            console.log(err);
+          })
+        }
+      }
+    })
+  </script>
+</body>
+</html>

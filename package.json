@@ -1,0 +1,25 @@
+{
+  "name": "renzhengfei",
+  "version": "1.0.0",
+  "description": "speech analysis of renzhengfei",
+  "main": "index.js",
+  "scripts": {
+    "build": "node index",
+    "show": "node index -s",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thinkerchan/renzhengfei.git"
+  },
+  "author": "chanthinker@foxmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thinkerchan/renzhengfei/issues"
+  },
+  "homepage": "https://github.com/thinkerchan/renzhengfei#readme",
+  "dependencies": {
+    "minimist": "^1.2.5",
+    "nodejieba": "^2.4.1"
+  }
+}
