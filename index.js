@@ -43,8 +43,7 @@ function output(fileUrl, title) {
     fixArr.push([item.word, sizeBase + (item.count - last.count) * factor])
   })
 
-  let _title = title ? title + '.json' : 'one.json'
-  fs.writeFile('./json/'+_title, JSON.stringify(fixArr, null, 2), 'utf8', (err) => {
+  fs.writeFile('./json/' + title + '.json', JSON.stringify(fixArr, null, 2), 'utf8', (err) => {
     if (err) {
       console.log('写入失败')
     } else {
@@ -53,16 +52,14 @@ function output(fileUrl, title) {
   })
 }
 
-
-
 function getJsonInfo(docDir){
   fs.readdir(docDir, (err, files) => {
     if (err) {
       console.log(err);
     } else {
-      fs.writeFile('./json/menu.json', JSON.stringify(files), 'utf8',(err)=>{
+      fs.writeFile('./menu.json', JSON.stringify(files), 'utf8',(err)=>{
         if (err) {
-
+          console.log('菜单数据写入失败')
         }else{
           console.log('菜单数据生成,启动服务器');
         }

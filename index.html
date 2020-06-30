@@ -7,46 +7,71 @@
   <title>任正非讲话分析</title>
 </head>
 <body id="Jbody">
-  <select name="name" id="Jselect">
+  <select name="name" id="Jselect" ref="Jselect">
+    <option>点此此处查看文章分析</option>
     <option :value="item" v-for="(item,index) of menuArr">{{item}}</option>
   </select>
   <div id="canvas-container">
-    <canvas id="canvas" width="750" height="500"></canvas>
+    <canvas id="canvas" width="800" height="600"></canvas>
   </div>
   <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.11/vue.min.js"></script>
   <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.19.2/axios.min.js"></script>
   <script src="https://cdn.bootcdn.net/ajax/libs/wordcloud2.js/1.1.1/wordcloud2.js"></script>
   <script>
-    let options = ({
-        "list": [],
-        "gridSize": 12, // size of the grid in pixels
-        "weightFactor": 2, // number to multiply for size of each word in the list
-        "fontWeight": 'normal', // 'normal', 'bold' or a callback
-        "fontFamily": 'Times, serif', // font to use
-        "color": 'random-light', // 'random-dark' or 'random-light'
-        "backgroundColor": '#555', // the color of canvas
-        "rotateRatio": 0, // probability for the word to rotate. 1 means always rotate
-    });
-
-
     let vm = new Vue({
       el: '#Jselect',
       data: {
-        menuArr:[1,2,3],
+        menuArr:[],
       },
       created: function () {
-        // WordCloud(canvas, options)
         this.getMenu()
+      },
+      mounted(){
+        let s = this.$refs.Jselect
+        s.addEventListener('change',(e)=>{
+          this.getDataList(s.value).then((res)=>{
+            console.log('分词数量:',res.length);
+            this.draw(res)
+          })
+        },false)
       },
       methods: {
         getMenu(){
           axios({
             method:'get',
-            url:'./json/menu.json',
+            url:'./menu.json',
           }).then((data)=>{
             this.menuArr = eval(data.data)
           }).catch((err)=>{
             console.log(err);
+          })
+        },
+        getDataList(file) {
+          return new Promise((resolve,reject)=>{
+            return axios({
+              method: 'get',
+              url: `./json/${file}`,
+            }).then((data) => {
+              console.log(data.data);
+
+              resolve(data.data)
+            }).catch((err) => {
+              console.log(err);
+              reject(err)
+            })
+          })
+        },
+        draw(list){
+          WordCloud(canvas, {
+            "list": list,
+            "gridSize": 15, // size of the grid in pixels
+            "weightFactor": 2, // number to multiply for size of each word in the list
+            "fontWeight": 'normal', // 'normal', 'bold' or a callback
+            // "fontFamily": 'Times, serif', // font to use
+            "fontFamily": 'SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace',
+            "color": 'random-dark', // 'random-dark' or 'random-light'
+            "backgroundColor": '#ccc', // the color of canvas
+            "rotateRatio": 0.5, // probability for the word to rotate. 1 means always rotate
           })
         }
       }
