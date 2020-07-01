@@ -43,7 +43,12 @@ function output(fileUrl, title) {
     fixArr.push([item.word, sizeBase + (item.count - last.count) * factor])
   })
 
-  fs.writeFile('./json/' + title + '.json', JSON.stringify(fixArr, null, 2), 'utf8', (err) => {
+  let targetDir = './json';
+  if (!fs.existsSync(targetDir)) {
+    fs.mkdirSync(targetDir);
+  }
+
+  fs.writeFile(targetDir+'/' + title + '.json', JSON.stringify(fixArr, null, 2), 'utf8', (err) => {
     if (err) {
       console.log('写入失败')
     } else {
