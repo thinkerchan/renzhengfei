@@ -9,15 +9,17 @@
 ```
 
 ## 项目目录
-renzhengfei
-  ├─.gitignore
-  ├─README.md
-  ├─final.js
-  ├─index.html // 展示入口
-  ├─index.js
-  ├─package-lock.json
-  ├─package.json
-  ├─user.utf8 // 用户词典,不填写权重则为0(即排除词)
-  ├─util.js
-  ├─menu.json // 生成的下拉菜单数据
-  ├─json // 分词结果json文件
+```
+  renzhengfei
+    ├─.gitignore
+    ├─README.md
+    ├─final.js
+    ├─index.html // 展示入口
+    ├─index.js
+    ├─package-lock.json
+    ├─package.json
+    ├─user.utf8 // 用户词典,不填写权重则为0(即排除词)
+    ├─util.js
+    ├─menu.json // 生成的下拉菜单数据
+    ├─json // 分词结果json文件
+```
