@@ -5,7 +5,7 @@
 ```bash
   npm install
   npm run build
-  npm show
+  npm run show
 ```
 
 ## 项目目录
