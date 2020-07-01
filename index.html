@@ -45,7 +45,7 @@
 
           this.getDataList(s.value).then((res)=>{
             console.log('分词数量:',res.length);
-            this.curLink = (location.href.host.indexOf('thinkerchan')>-1? 'https://github.com/thinkerchan/renzhengfei/blob/master':'')+res.path
+            this.curLink = (location.host.indexOf('thinkerchan')>-1? 'https://github.com/thinkerchan/renzhengfei/blob/master':'')+res.path
             this.draw(res.list)
           })
         },false)
