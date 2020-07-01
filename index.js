@@ -13,7 +13,6 @@ function analyzeDir(docDir){
       files.forEach((item, index) => {
         if (!(/^\./).test(item)) {
           let curFileUrl = path.join(docDir, item);
-
           fs.stat(curFileUrl, (err, stats) => {
             if (err) {
               console.warn(curFileUrl, err);
@@ -48,11 +47,14 @@ function output(fileUrl, title) {
     fs.mkdirSync(targetDir);
   }
 
-  fs.writeFile(targetDir+'/' + title + '.json', JSON.stringify(fixArr, null, 2), 'utf8', (err) => {
+  console.log('正在分析:',fileUrl);
+
+  fs.writeFile(targetDir+'/' + title + '.json', JSON.stringify({
+    list:fixArr,
+    path: fileUrl
+  }, null, 2), 'utf8', (err) => { // 单层路径
     if (err) {
       console.log('写入失败')
-    } else {
-      console.log(fileUrl, '抽取完毕')
     }
   })
 }
@@ -65,8 +67,6 @@ function getJsonInfo(docDir){
       fs.writeFile('./menu.json', JSON.stringify(files), 'utf8',(err)=>{
         if (err) {
           console.log('菜单数据写入失败')
-        }else{
-          console.log('菜单数据生成,启动服务器');
         }
       })
     }
@@ -77,7 +77,6 @@ function getJsonInfo(docDir){
   if (argv.s) {
     getJsonInfo('./json')
   }else{
-    console.log('正在分析中.... 请稍后....')
     analyzeDir('./doc')
   }
 })()
